@@ -1,5 +1,5 @@
 # VibeCoding
-Project_01
+
 🌈 PROJECT: Mood-Based Landing Page
 A personal landing page that changes theme (colors, animations, layout) based on your selected mood (e.g., Calm, Focused, Energetic, Sad, etc.)
 
