@@ -4,33 +4,33 @@
 A personal landing page that changes theme (colors, animations, layout) based on your selected mood (e.g., Calm, Focused, Energetic, Sad, etc.)
 
 🧱 1. Project Structure
-bash
+<br />bash
 <br />Copy
-Edit
-mood-landing/
-├── public/             # Static assets (icons, images, etc.)
-├── src/
-│   ├── components/     # Reusable UI components (Button, Header, MoodCard, etc.)
-│   ├── pages/          # Main views (Home, About, etc.)
-│   ├── styles/         # Tailwind config, custom CSS if needed
-│   ├── hooks/          # Custom React hooks (e.g., useMood)
-│   ├── utils/          # Helper functions (e.g., mood-to-theme mapping)
-│   └── App.tsx
-├── .env                # API keys
-├── tailwind.config.js
-├── supabase.config.js  # Database config
-└── package.json
+<br />Edit
+<br />mood-landing/
+<br />├── public/             # Static assets (icons, images, etc.)
+<br />├── src/
+<br />│   ├── components/     # Reusable UI components (Button, Header, MoodCard, etc.)
+<br />│   ├── pages/          # Main views (Home, About, etc.)
+<br />│   ├── styles/         # Tailwind config, custom CSS if needed
+<br />│   ├── hooks/          # Custom React hooks (e.g., useMood)
+<br />│   ├── utils/          # Helper functions (e.g., mood-to-theme mapping)
+<br />│   └── App.tsx
+<br />├── .env                # API keys
+<br />├── tailwind.config.js
+<br />├── supabase.config.js  # Database config
+<br />└── package.json
 
 💻 2. Tech Stack (Free & Modern)
-Layer	Tool / Tech	Notes
-Frontend	React + Vite / Next.js	Fast setup and SEO-friendly
-Styling	Tailwind CSS + Framer Motion	Easy theming + animation
-State Management	useState / useReducer / Zustand	Lightweight options
-Backend / DB	Supabase	Free DB + Auth
-Authentication	Supabase Auth	Social/email login
-APIs	Supabase REST + optional Node.js	Supabase provides built-in APIs
-Image Upload (optional)	Supabase Storage	For profile or mood images
-Deployment	Vercel / Netlify	Free, Git-based, instant deploy
+<br />Layer	Tool / Tech	Notes
+<br />Frontend	React + Vite / Next.js	Fast setup and SEO-friendly
+<br />Styling	Tailwind CSS + Framer Motion	Easy theming + animation
+<br />State Management	useState / useReducer / Zustand	Lightweight options
+<br />Backend / DB	Supabase	Free DB + Auth
+<br />Authentication	Supabase Auth	Social/email login
+<br />APIs	Supabase REST + optional Node.js	Supabase provides built-in APIs
+<br />Image Upload (optional)	Supabase Storage	For profile or mood images
+<br />Deployment	Vercel / Netlify	Free, Git-based, instant deploy
 
 🎨 3. Theme / Mood Management Ideas
 Create a moods.js or moodThemes.js file:
