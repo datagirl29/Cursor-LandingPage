@@ -5,7 +5,7 @@ A personal landing page that changes theme (colors, animations, layout) based on
 
 🧱 1. Project Structure
 bash
-Copy
+<br />Copy
 Edit
 mood-landing/
 ├── public/             # Static assets (icons, images, etc.)
