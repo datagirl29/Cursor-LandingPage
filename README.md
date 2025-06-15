@@ -20,6 +20,7 @@ mood-landing/
 ├── tailwind.config.js
 ├── supabase.config.js  # Database config
 └── package.json
+
 💻 2. Tech Stack (Free & Modern)
 Layer	Tool / Tech	Notes
 Frontend	React + Vite / Next.js	Fast setup and SEO-friendly
