@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mood-Based Landing Page</title>
+  <style>
+    :root {
+      --bg-color: #f0f0f0;
+      --accent-color: #333;
+      --text-color: #222;
+    }
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: var(--bg-color);
+      color: var(--text-color);
+      transition: background 0.5s, color 0.5s;
+      min-height: 100vh;
+      min-width: 100vw;
+      height: 100vh;
+      width: 100vw;
+      overflow: hidden;
+    }
+    .main-container {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      justify-content: flex-start;
+      height: 100vh;
+      width: 100vw;
+      box-sizing: border-box;
+    }
+    .mood-selector {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      justify-content: center;
+      padding: 2rem 0 1rem 0;
+    }
+    .mood-btn {
+      padding: 0.75rem 1.5rem;
+      border: none;
+      border-radius: 25px;
+      background: var(--accent-color);
+      color: #fff;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.2s;
+    }
+    .mood-btn.active, .mood-btn:hover {
+      background: #555;
+      transform: scale(1.05);
+    }
+    .mood-content {
+      text-align: center;
+      max-width: 700px;
+      flex: 1 1 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto;
+      width: 100%;
+    }
+    .mood-image {
+      width: 100%;
+      max-width: 500px;
+      border-radius: 20px;
+      margin: 2rem auto 0 auto;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+      display: block;
+      object-fit: cover;
+      height: 50vh;
+      min-height: 250px;
+    }
+    @media (max-width: 600px) {
+      .mood-content { max-width: 95vw; }
+      .mood-image { max-width: 90vw; }
+    }
+    .bg-overlay {
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      z-index: 0;
+      background-color: rgba(0,0,0,0.01);
+      filter: brightness(1);
+      transition: background-image 0.5s;
+      animation: kenburns 18s ease-in-out infinite alternate;
+    }
+    @keyframes kenburns {
+      0% {
+        transform: scale(1) translate(0, 0);
+      }
+      100% {
+        transform: scale(1.08) translate(-2%, -2%);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-overlay"></div>
+  <div class="mood-selector floating-selector">
+    <button class="mood-btn active" data-mood="happy">Happy</button>
+    <button class="mood-btn" data-mood="sad">Sad</button>
+    <button class="mood-btn" data-mood="energetic">Energetic</button>
+    <button class="mood-btn" data-mood="calm">Calm</button>
+  </div>
+  <div class="centered-description" id="centered-description">Select a mood to change the vibe of this page.</div>
+  <button class="bottom-btn" id="mood-btn">Change Mood</button>
+  <script>
+    // Mood data
+    const moods = {
+      happy: {
+        colors: {
+          bg: '#FFF9C4',
+          accent: '#FFD600',
+          text: '#795548',
+        },
+        description: 'Let your joy shine brighter today!',
+        image: 'https://res.cloudinary.com/dhykxqpfx/image/upload/v1750312999/Happy_ccp5z2.jpg', // Local digital art for Happy
+      },
+      sad: {
+        colors: {
+          bg: '#B3C6E7',
+          accent: '#607D8B',
+          text: '#263238',
+        },
+        description: 'It\'s okay to pause—brighter days are coming.',
+        image: 'https://res.cloudinary.com/dhykxqpfx/image/upload/v1750312999/Sad_p0jid6.jpg', // Local digital art for Sad
+      },
+      energetic: {
+        colors: {
+          bg: '#FFF3E0',
+          accent: '#FF6F00',
+          text: '#BF360C',
+        },
+        description: 'Channel your energy and conquer your goals!',
+        image: 'https://res.cloudinary.com/dhykxqpfx/image/upload/v1750312999/Energetic_jkyvui.jpg', // Local digital art for Energetic
+      },
+      calm: {
+        colors: {
+          bg: '#E0F7FA',
+          accent: '#00B8D4',
+          text: '#006064',
+        },
+        description: 'Take a deep breathe and find your stillness in the moment',
+        image: 'https://res.cloudinary.com/dhykxqpfx/image/upload/v1750312999/Calm_mncmai.png', // Local digital art for Calm
+      },
+    };
+
+    // Elements
+    const moodBtns = document.querySelectorAll('.mood-btn');
+    const centeredDescription = document.getElementById('centered-description');
+    const moodBtn = document.getElementById('mood-btn');
+    const bgOverlay = document.querySelector('.bg-overlay');
+    const moodSelector = document.querySelector('.mood-selector');
+    let currentMood = 'happy';
+
+    function setMood(mood) {
+      currentMood = mood;
+      // Set background image
+      bgOverlay.style.backgroundImage = `url('${moods[mood].image}')`;
+      // Set description in center
+      centeredDescription.style.opacity = '0';
+      setTimeout(() => {
+        centeredDescription.textContent = moods[mood].description;
+        centeredDescription.style.opacity = '1';
+      }, 200);
+      // Set button color
+      moodBtn.style.background = moods[mood].colors.accent;
+      moodBtn.style.color = '#fff';
+    }
+
+    moodBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelector('.mood-btn.active').classList.remove('active');
+        btn.classList.add('active');
+        setMood(btn.dataset.mood);
+      });
+    });
+
+    // Button at bottom can cycle moods
+    const moodOrder = ['happy', 'sad', 'energetic', 'calm'];
+    moodBtn.addEventListener('click', () => {
+      let idx = moodOrder.indexOf(currentMood);
+      let nextMood = moodOrder[(idx + 1) % moodOrder.length];
+      document.querySelector(`.mood-btn[data-mood="${nextMood}"]`).click();
+    });
+
+    // Initial mood
+    setMood('happy');
+  </script>
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+    }
+    body {
+      position: relative;
+      min-height: 100vh;
+      min-width: 100vw;
+      width: 100vw;
+      height: 100vh;
+      font-family: 'Segoe UI', Arial, sans-serif;
+    }
+    .bg-overlay {
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      z-index: 0;
+      background-color: rgba(0,0,0,0.01);
+      filter: brightness(1);
+      transition: background-image 0.5s;
+    }
+    .centered-description {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 2;
+      color: #fff;
+      font-size: 1.5rem;
+      font-weight: bold;
+      text-shadow: 0 2px 16px rgba(0,0,0,0.7);
+      background: rgba(0,0,0,0.25);
+      padding: 2rem 2.5rem;
+      border-radius: 1.5rem;
+      max-width: 90vw;
+      box-sizing: border-box;
+      text-align: center;
+      transition: opacity 0.3s ease-in-out;
+    }
+    .bottom-btn {
+      position: absolute;
+      left: 50%;
+      bottom: 2.5rem;
+      transform: translateX(-50%);
+      z-index: 2;
+      padding: 1.1rem 2.5rem;
+      font-size: 1.2rem;
+      border: none;
+      border-radius: 2rem;
+      background: #FFD600;
+      color: #fff;
+      font-weight: bold;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.18);
+      cursor: pointer;
+      transition: background 0.3s, color 0.3s, transform 0.2s;
+    }
+    .bottom-btn:hover {
+      background: #ffb300;
+      transform: translateX(-50%) scale(1.05);
+    }
+    .floating-selector {
+      position: absolute;
+      top: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 3;
+      background: rgba(0,0,0,0.18);
+      border-radius: 2rem;
+      padding: 0.5rem 1.5rem;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.10);
+      display: flex;
+      gap: 1rem;
+    }
+    .mood-btn {
+      padding: 0.7rem 1.5rem;
+      border: none;
+      border-radius: 25px;
+      background: #333;
+      color: #fff;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.2s;
+      opacity: 0.85;
+    }
+    .mood-btn.active, .mood-btn:hover {
+      background: #FFD600;
+      color: #222;
+      transform: scale(1.08);
+      opacity: 1;
+    }
+    @media (max-width: 600px) {
+      .centered-description {
+        font-size: 0.9rem;
+        padding: 0.8rem 1rem;
+      }
+      .bottom-btn {
+        font-size: 1rem;
+        padding: 0.8rem 1.2rem;
+      }
+      .floating-selector {
+        padding: 0.3rem 0.5rem;
+        gap: 0.5rem;
+      }
+      .mood-btn {
+        padding: 0.5rem 0.7rem;
+        font-size: 0.95rem;
+      }
+    }
+  </style>
+</body>
+</html> 
