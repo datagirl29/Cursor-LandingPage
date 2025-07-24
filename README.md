@@ -2,7 +2,8 @@
 
 A simple, interactive landing page built using **HTML**, **CSS**, and **JavaScript** as part of the **Vibe Coding** movement. This project was developed using **Cursor** and serves as a learning experiment to explore how visual design and behavior can dynamically adapt based on user mood selection.
 
----
+---<img width="3572" height="1800" alt="Screenshot 2025-07-23 at 11 48 36 PM" src="https://github.com/user-attachments/assets/c4880327-ac3b-4c58-9747-b8131b7d5cfb" />
+
 
 ## 🧠 Purpose
 
